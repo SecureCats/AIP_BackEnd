@@ -31,17 +31,24 @@ class PublicKey(models.Model):
         else:
             return None
 
-    def __init__(self, classno):
-        self.classno = classno
+    @classmethod
+    def create(cls, classno):
         p = number.getStrongPrime(2048)
         q = number.getStrongPrime(2048)
         n = p*q
-        self.n = str(n)
         randlis = [random.randrange(0, 1<<1024) for _ in range(4)]
-        rand2lis = map(lambda x: pow(x, 2, n) ,randlis)
-        self.a , self.b, self.c, self.h = map(lambda x: str(x), rand2lis)
-        h = int(self.h)
+        rand2lis = list(map(lambda x: pow(x, 2, n) ,randlis))
+        h = rand2lis[3]
         r = random.randrange(100)
         g = pow(h, r, n)
-        self.p = str(p)
-        self.g = str(g)
+        obj = cls(
+            classno = classno,
+            n = str(n),
+            a = str(rand2lis[0]),
+            b = str(rand2lis[1]),
+            c = str(rand2lis[2]),
+            h = str(rand2lis[3]),
+            p = str(p),
+            g = str(g)
+        )
+        return obj

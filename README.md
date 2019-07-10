@@ -5,4 +5,4 @@
 * [ ] login
 * [ ] register
 * [ ] class management
-* [ ] public key query interface 
+* [x] public key query interface 

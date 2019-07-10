@@ -8,7 +8,7 @@ from .crypto_utils import cl_sign
 class CLSignTest(TestCase):
 
     def test_cl_sign(self):
-        pubkey = PublicKey('666')
+        pubkey = PublicKey.create('666')
         uk = random.randrange(1<<4096)
         r = random.randrange(1<<32)
         r1, r2 = [random.randrange(1<<32) for _ in range(2)]
