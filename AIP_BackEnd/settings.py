@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'anonymous_teacher_commmit_aip.urls'
+ROOT_URLCONF = 'AIP_BackEnd.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'anonymous_teacher_commmit_aip.wsgi.application'
+WSGI_APPLICATION = 'AIP_BackEnd.wsgi.application'
 
 
 # Database

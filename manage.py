@@ -5,7 +5,7 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'anonymous_teacher_commmit_aip.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'AIP_BackEnd.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
