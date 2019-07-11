@@ -2,7 +2,8 @@
 
 ## Task
 * [x] sign function
-* [ ] login
+* [x] login
 * [ ] register
-* [ ] class management
+* [x] class management
 * [x] public key query interface 
+* [ ] sign interface

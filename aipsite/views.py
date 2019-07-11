@@ -14,3 +14,6 @@ def pubkey_query(request, classno):
         'g': pubkey.g,
         'h': pubkey.h
     })
+
+def index(request):
+    return HttpResponse('hello, world')

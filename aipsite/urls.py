@@ -6,5 +6,7 @@ urlpatterns = [
         path('v1/', include([
             path('pubkey/<str:classno>', views.pubkey_query),
         ]))
-    ]))
+    ])),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', views.index, name='index'),
 ]
