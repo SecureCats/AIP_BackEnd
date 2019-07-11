@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import PublicKey
+from .models import PublicKey, AipUser
 from Crypto.Util import number
+from django.contrib.auth.admin import UserAdmin, UserChangeForm
 import random
 
 # Register your models here.
@@ -29,4 +30,22 @@ class PublicKeyAdmin(admin.ModelAdmin):
                 obj.g = str(g)
                 obj.save()
 
-    
+class AipUserChangeForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
+        model = AipUser
+
+@admin.register(AipUser)
+class AipUserAdmin(UserAdmin):
+    form = AipUserChangeForm
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
+        ('AipInfo', {'fields': ('classno', 'is_signed')}),
+        ('Permissions',
+        {'fields': ('is_active',
+            'is_staff',
+            'is_superuser',
+            'groups',
+            'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
