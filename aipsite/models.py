@@ -1,17 +1,18 @@
 from django.db import models
 from Crypto.Util import number
+from django.contrib.auth.models import AbstractUser
 import random
 
 # Create your models here.
 class PublicKey(models.Model):
 
-    a = models.CharField(max_length=500)
-    b = models.CharField(max_length=500)
-    c = models.CharField(max_length=500)
-    n = models.CharField(max_length=500)
-    g = models.CharField(max_length=500)
-    h = models.CharField(max_length=500)
-    p = models.CharField(max_length=500)
+    a = models.CharField(max_length=500, blank=True)
+    b = models.CharField(max_length=500, blank=True)
+    c = models.CharField(max_length=500, blank=True)
+    n = models.CharField(max_length=500, blank=True)
+    g = models.CharField(max_length=500, blank=True)
+    h = models.CharField(max_length=500, blank=True)
+    p = models.CharField(max_length=500, blank=True)
 
     le = 2050
     ls = 8196
@@ -52,3 +53,13 @@ class PublicKey(models.Model):
             g = str(g)
         )
         return obj
+
+    def __str__(self):
+        return self.classno
+
+class AipUser(AbstractUser):
+    classno = models.ForeignKey(
+        PublicKey, on_delete=models.SET_NULL, 
+        blank=True, null=True
+    )
+    is_signed = models.BooleanField(default=False)
