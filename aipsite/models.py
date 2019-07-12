@@ -86,7 +86,7 @@ class PublicKey(models.Model):
         return self.create(self.teaching_class)
 
 class AipUser(AbstractUser):
-    classno = models.ForeignKey(
+    teaching_class = models.ForeignKey(
         TeachingClass, on_delete=models.SET_NULL, 
         blank=True, null=True
     )

@@ -54,7 +54,7 @@ class AipUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
-        ('AipInfo', {'fields': ('classno', 'is_signed')}),
+        ('AipInfo', {'fields': ('teaching_class', 'is_signed')}),
         ('Permissions',
         {'fields': ('is_active',
             'is_staff',
