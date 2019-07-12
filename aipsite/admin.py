@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PublicKey, AipUser
+from .models import PublicKey, AipUser, TeachingClass
 from Crypto.Util import number
 from django.contrib.auth.admin import UserAdmin, UserChangeForm
 import random
@@ -8,27 +8,34 @@ import random
 @admin.register(PublicKey)
 class PublicKeyAdmin(admin.ModelAdmin):
 
-    actions = ['init_pubkey']
+    actions = ['init_pubkey', 'renew_pubkey']
+    fieldsets = (
+        (None, {
+            "fields": (
+                'teaching_class', 'semaster'
+            ),
+        }),
+        ('KeyDetails',{
+            'fields':(
+                'a', 'b', 'c', 'g', 'n', 'h', 'p'
+            ),
+            'classes':('collapse', 'wide')
+        })
+    )
+    list_display=('teaching_class', 'semaster')
+    
     
     def init_pubkey(self, request, queryset):
         for obj in queryset:
             if obj.n == '':
-                p = number.getStrongPrime(2048)
-                q = number.getStrongPrime(2048)
-                n = p*q
-                randlis = [random.randrange(0, 1<<1024) for _ in range(4)]
-                rand2lis = list(map(lambda x: pow(x, 2, n) ,randlis))
-                h = rand2lis[3]
-                r = random.randrange(100)
-                g = pow(h, r, n)
-                obj.p = str(p)
-                obj.n = str(n)
-                obj.a = str(rand2lis[0])
-                obj.b = str(rand2lis[1])
-                obj.c = str(rand2lis[2])
-                obj.h = str(rand2lis[3])
-                obj.g = str(g)
+                obj.init_key()
                 obj.save()
+
+    def renew_pubkey(self, requst, queryset):
+        for obj in queryset:
+            ret = obj.renew()
+            if ret:
+                ret.save()
 
 class AipUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
@@ -49,3 +56,14 @@ class AipUserAdmin(UserAdmin):
             'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
+
+class PubkeyInline(admin.StackedInline):
+    model = PublicKey
+    fields = ['semaster']
+    readonly_fields = ['semaster']
+    extra = 0
+
+@admin.register(TeachingClass)
+class TeachingClassAdmin(admin.ModelAdmin):
+    list_display = ('classno', 'school')
+    inlines = [PubkeyInline]
