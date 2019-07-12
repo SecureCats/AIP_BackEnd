@@ -26,7 +26,7 @@ SECRET_KEY = 'sv4f1z7x2fqeh3+^b7(-=2vk1-d0#$b!+_#w97(+hd4if2%h4('
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'testserver'
+    '*'
 ]
 
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,16 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'aipsite.AipUser'
 
 LOGIN_REDIRECT_URL = '/'
+
+LOGIN_URL = '/login'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}

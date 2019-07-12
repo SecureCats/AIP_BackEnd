@@ -24,6 +24,9 @@ def pubkey_query(request, classno):
 def index(request):
     return HttpResponse('hello, world')
 
+def login_page(request):
+    return render(request,'login/index.html')
+
 @require_POST
 @login_required
 def sign(request):
