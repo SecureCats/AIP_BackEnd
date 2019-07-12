@@ -6,7 +6,7 @@ from . import models
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 import json
-from .crypto_utils import cl_sign
+from .utils import cl_sign
 
 # Create your views here.
 def pubkey_query(request, classno):

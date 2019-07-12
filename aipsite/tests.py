@@ -3,7 +3,7 @@ from .models import PublicKey, AipUser
 import gmpy2
 import random
 import json
-from .crypto_utils import cl_sign
+from .utils import cl_sign
 
 # Create your tests here.
 class CLSignTest(TestCase):
