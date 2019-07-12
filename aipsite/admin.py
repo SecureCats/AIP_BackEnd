@@ -1,10 +1,16 @@
 from django.contrib import admin
+from django import forms
 from .models import PublicKey, AipUser, TeachingClass
 from Crypto.Util import number
 from django.contrib.auth.admin import UserAdmin, UserChangeForm
 import random
 
 # Register your models here.
+class PublicKeyForm(forms.ModelForm):
+    class Meta:
+        model = PublicKey
+        fields = ['teaching_class', 'semaster']
+
 @admin.register(PublicKey)
 class PublicKeyAdmin(admin.ModelAdmin):
 
@@ -23,6 +29,7 @@ class PublicKeyAdmin(admin.ModelAdmin):
         })
     )
     list_display=('teaching_class', 'semaster')
+    form = PublicKeyForm
     
     
     def init_pubkey(self, request, queryset):
