@@ -63,7 +63,13 @@ class PubkeyInline(admin.StackedInline):
     readonly_fields = ['semaster']
     extra = 0
 
+class AIPUserInline(admin.StackedInline):
+    model = AipUser
+    fields = ['is_signed', 'username']
+    extra = 0
+    
+
 @admin.register(TeachingClass)
 class TeachingClassAdmin(admin.ModelAdmin):
     list_display = ('classno', 'school')
-    inlines = [PubkeyInline]
+    inlines = [PubkeyInline, AIPUserInline]
