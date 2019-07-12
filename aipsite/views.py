@@ -30,9 +30,12 @@ def sign(request):
     if request.user.is_signed:
         return HttpResponseForbidden('You have got the signiture')
     recv_json = json.loads(request.body)
-    pubkey = request.user.classno
-    if not pubkey:
+    teaching_class = request.user.classno
+    if not teaching_class:
         return HttpResponseForbidden('You have not joined a class')
+    pubkey = teaching_class.publickey_set.get(semaster=models.get_semaster())
+    if not pubkey:
+        return HttpResponseForbidden('Prof commmitment has not start yet')
     param_list = ('x', 'C', 'z1', 'z2', 'y')
     try:
         params = {i:recv_json[i] for i in param_list}
