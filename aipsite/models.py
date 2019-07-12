@@ -4,6 +4,10 @@ from django.contrib.auth.models import AbstractUser
 import random
 
 # Create your models here.
+class TeachingClass(models.Model):
+    classno = models.CharField(max_length=10, unique=True)
+    school = models.CharField('学院', max_length=10, blank=True)
+
 class PublicKey(models.Model):
 
     a = models.CharField(max_length=500, blank=True)
@@ -18,7 +22,7 @@ class PublicKey(models.Model):
     ls = 8196
     ln = 4096
 
-    classno = models.CharField(max_length=10, unique=True)
+    teaching_class = models.ForeignKey(TeachingClass, models.CASCADE)
 
     def get_int(self, name):
         if isinstance(name, (list, tuple)):
@@ -59,7 +63,7 @@ class PublicKey(models.Model):
 
 class AipUser(AbstractUser):
     classno = models.ForeignKey(
-        PublicKey, on_delete=models.SET_NULL, 
+        TeachingClass, on_delete=models.SET_NULL, 
         blank=True, null=True
     )
     is_signed = models.BooleanField(default=False)

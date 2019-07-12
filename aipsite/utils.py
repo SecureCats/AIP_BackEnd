@@ -2,6 +2,7 @@ import gmpy2
 import random
 from .models import PublicKey
 from Crypto.Util import number
+from django.utils import timezone
 
 def cl_sign(pubkey, **kwargs):
     n = pubkey.get_int('n')
@@ -29,3 +30,11 @@ def cl_sign(pubkey, **kwargs):
     d = gmpy2.invert(e, (p-1)*(q-1))
     v = pow(param['C'] * c * pow(b, r_, n), d, n)
     return r_, e, v
+
+def get_semaster():
+    now = timezone.now()
+    if now.month in (9,10,11,12,1,2):
+        # Fall semaster
+        return '{}-{}-1'.format(now.year, now.year+1)
+    else:
+        return '{}-{}-2'.format(now.year-1, now.year)
