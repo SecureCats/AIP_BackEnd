@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from .models import PublicKey, AipUser
+from .models import PublicKey, AipUser, TeachingClass, get_semaster
 import gmpy2
 import random
 import json
@@ -9,7 +9,8 @@ from .utils import cl_sign
 class CLSignTest(TestCase):
 
     def test_cl_sign(self):
-        pubkey = PublicKey.create('666')
+        teaching_claass = TeachingClass(classno='666')
+        pubkey = PublicKey.create(teaching_claass)
         uk = random.randrange(1<<4096)
         r = random.randrange(1<<32)
         r1, r2 = [random.randrange(1<<32) for _ in range(2)]
@@ -39,10 +40,12 @@ class CLSignTest(TestCase):
 class CLSignInterfaceTest(TestCase):
     @classmethod
     def setUpTestData(cls):
+        cls.teaching_class = TeachingClass(classno='233')
+        cls.teaching_class.save()
         cls.user = AipUser.objects.create_user('spencer')
-        cls.pubkey = PublicKey.create('233')
+        cls.pubkey = PublicKey.create(cls.teaching_class)
         cls.pubkey.save()
-        cls.user.classno = cls.pubkey
+        cls.user.teaching_class = cls.teaching_class
         cls.user.save()
         return super().setUpTestData()
     
@@ -84,3 +87,7 @@ class CLSignInterfaceTest(TestCase):
         right = pow(a, uk, n) * pow(b, s, n) * c % n
         self.assertEqual(left, right)
 
+    def test_query_pubkey(self):
+        client = Client()
+        response = client.get('/api/v1/pubkey/'+get_semaster()+'/233')
+        self.assertEqual(response.status_code, 200)
