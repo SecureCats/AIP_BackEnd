@@ -5,10 +5,10 @@ from django.utils import timezone
 import random
 
 # Create your models here.
-def get_semaster():
+def get_semester():
     now = timezone.now()
     if now.month in (9,10,11,12,1,2):
-        # Fall semaster
+        # Fall semester
         return '{}-{}-1'.format(now.year, now.year+1)
     else:
         return '{}-{}-2'.format(now.year-1, now.year)
@@ -35,7 +35,7 @@ class PublicKey(models.Model):
     ln = 4096
 
     teaching_class = models.ForeignKey(TeachingClass, models.CASCADE)
-    semaster = models.CharField("学期", max_length=20)
+    semester = models.CharField("学期", max_length=20)
 
     def get_int(self, name):
         if isinstance(name, (list, tuple)):
@@ -67,21 +67,21 @@ class PublicKey(models.Model):
         self.g = str(g)
 
     @classmethod
-    def create(cls, teaching_class, semaster=None):
-        if not semaster:
-            semaster = get_semaster()
+    def create(cls, teaching_class, semester=None):
+        if not semester:
+            semester = get_semester()
         obj = cls(
             teaching_class = teaching_class,
-            semaster = semaster
+            semester = semester
         )
         obj.init_key()
         return obj
 
     def __str__(self):
-        return '{}_{}'.format(self.teaching_class, self.semaster)
+        return '{}_{}'.format(self.teaching_class, self.semester)
 
     def renew(self):
-        if get_semaster() == self.semaster:
+        if get_semester() == self.semester:
             return None
         return self.create(self.teaching_class)
 

@@ -9,11 +9,11 @@ import json
 from .utils import cl_sign
 
 # Create your views here.
-def pubkey_query(request, semaster, classno):
+def pubkey_query(request, semester, classno):
     pubkey = get_object_or_404(
         models.PublicKey, 
         teaching_class__classno=classno, 
-        semaster=semaster
+        semester=semester
     )
     return JsonResponse({
         'n': pubkey.n,
@@ -37,7 +37,7 @@ def sign(request):
     teaching_class = request.user.teaching_class
     if not teaching_class:
         return HttpResponseForbidden('You have not joined a class')
-    pubkey = teaching_class.publickey_set.get(semaster=models.get_semaster())
+    pubkey = teaching_class.publickey_set.get(semester=models.get_semester())
     if not pubkey:
         return HttpResponseForbidden('Prof commmitment has not start yet')
     param_list = ('x', 'C', 'z1', 'z2', 'y')
