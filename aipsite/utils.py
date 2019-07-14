@@ -3,6 +3,7 @@ import random
 from .models import PublicKey
 from Crypto.Util import number
 from django.utils import timezone
+from hashlib import sha256
 
 def cl_sign(pubkey, **kwargs):
     n = pubkey.get_int('n')
@@ -19,7 +20,7 @@ def cl_sign(pubkey, **kwargs):
             param[i] = int(kwargs[i])
         except:
             return None
-    if param['x'] != g * h * param['C'] % 731499577:
+    if param['x'] != int(sha256(str(g * h * param['C']).encode()).hexdigest(), 16) % 731499577:
         return False
     if pow(a, param['z1'], n) * pow(b, param['z2'], n) * \
         gmpy2.invert(param['y'], n) % n != pow(param['C'], param['x'], n):
