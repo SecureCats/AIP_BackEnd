@@ -30,8 +30,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            sudo apt-get install libgmp3-dev
-            sudo apt-get install libmpfr-dev
+            sudo apt-get install libgmp3-dev libmpfr-dev libmpc-dev
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
