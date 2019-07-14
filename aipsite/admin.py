@@ -9,7 +9,7 @@ import random
 class PublicKeyForm(forms.ModelForm):
     class Meta:
         model = PublicKey
-        fields = ['teaching_class', 'semaster']
+        fields = ['teaching_class', 'semester']
 
 @admin.register(PublicKey)
 class PublicKeyAdmin(admin.ModelAdmin):
@@ -18,7 +18,7 @@ class PublicKeyAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             "fields": (
-                'teaching_class', 'semaster'
+                'teaching_class', 'semester'
             ),
         }),
         ('KeyDetails',{
@@ -28,7 +28,7 @@ class PublicKeyAdmin(admin.ModelAdmin):
             'classes':('collapse', 'wide')
         })
     )
-    list_display=('teaching_class', 'semaster')
+    list_display=('teaching_class', 'semester')
     form = PublicKeyForm
     
     
@@ -66,8 +66,8 @@ class AipUserAdmin(UserAdmin):
 
 class PubkeyInline(admin.StackedInline):
     model = PublicKey
-    fields = ['semaster']
-    readonly_fields = ['semaster']
+    fields = ['semester']
+    readonly_fields = ['semester']
     extra = 0
 
 class AIPUserInline(admin.StackedInline):

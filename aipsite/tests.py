@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from .models import PublicKey, AipUser, TeachingClass, get_semaster
+from .models import PublicKey, AipUser, TeachingClass, get_semester
 import gmpy2
 import random
 import json
@@ -89,5 +89,5 @@ class CLSignInterfaceTest(TestCase):
 
     def test_query_pubkey(self):
         client = Client()
-        response = client.get('/api/v1/pubkey/'+get_semaster()+'/233')
+        response = client.get('/api/v1/pubkey/'+get_semester()+'/233')
         self.assertEqual(response.status_code, 200)
