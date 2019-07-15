@@ -24,9 +24,9 @@ def pubkey_query(request, semester, classno):
         'h': pubkey.h
     })
 
-@login_required
-def index(request):
-    return HttpResponse('hello, world')
+# @login_required
+# def index(request):
+#     return HttpResponse('hello, world')
 
 def login_page(request):
     return render(request,'login/index.html')
