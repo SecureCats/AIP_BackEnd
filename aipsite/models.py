@@ -22,13 +22,13 @@ class TeachingClass(models.Model):
 
 class PublicKey(models.Model):
 
-    a = models.CharField(max_length=500, blank=True)
-    b = models.CharField(max_length=500, blank=True)
-    c = models.CharField(max_length=500, blank=True)
-    n = models.CharField(max_length=500, blank=True)
-    g = models.CharField(max_length=500, blank=True)
-    h = models.CharField(max_length=500, blank=True)
-    p = models.CharField(max_length=500, blank=True)
+    a = models.CharField(max_length=1500, blank=True)
+    b = models.CharField(max_length=1500, blank=True)
+    c = models.CharField(max_length=1500, blank=True)
+    n = models.CharField(max_length=1500, blank=True)
+    g = models.CharField(max_length=1500, blank=True)
+    h = models.CharField(max_length=1500, blank=True)
+    p = models.CharField(max_length=1500, blank=True)
 
     le = 2050
     ls = 8196

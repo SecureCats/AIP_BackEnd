@@ -4,6 +4,7 @@ import gmpy2
 import random
 import json
 from .utils import cl_sign
+from hashlib import sha256
 
 # Create your tests here.
 class CLSignTest(TestCase):
@@ -17,7 +18,7 @@ class CLSignTest(TestCase):
         a, b, c, n, g, h = pubkey.get_int(('a','b','c','n','g','h'))
         C = pow(a,uk,n) * pow(b, r, n) % n
         y = pow(a, r1, n) * pow(b, r2, n) % n
-        x = C * g * h % 731499577
+        x = int(sha256(str(C * g * h).encode()).hexdigest(), 16) % 731499577
         z1 = r1 + x * uk
         z2 = r2 + x * r
         param = {
@@ -64,7 +65,7 @@ class CLSignInterfaceTest(TestCase):
         a, b, c, n, g, h = self.pubkey.get_int(('a','b','c','n','g','h'))
         C = pow(a,uk,n) * pow(b, r, n) % n
         y = pow(a, r1, n) * pow(b, r2, n) % n
-        x = C * g * h % 731499577
+        x = int(sha256(str(C * g * h).encode()).hexdigest(), 16) % 731499577
         z1 = r1 + x * uk
         z2 = r2 + x * r
         param = {
