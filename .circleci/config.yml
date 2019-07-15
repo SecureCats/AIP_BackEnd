@@ -54,7 +54,7 @@ jobs:
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
       - save_cache:
-          path:
+          paths:
             - ~/.cache/yarn
           key: yarn-package-{{ checksum "frontend/yarn.lock" }}
           name: save yarn cache
