@@ -44,8 +44,9 @@ jobs:
       - run:
           name: build frontend
           command: |
-            yarn global add @vue/cli
-            cd frontend && yarn build --frozen-lockfile
+            yarn global add @vue/cli @vue/cli-service
+            export PATH="$PATH:$(yarn global bin)"
+            cd frontend && yarn install && yarn build --frozen-lockfile
 
       - save_cache:
           name: save python cache
