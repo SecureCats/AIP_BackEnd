@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.7.4-buster
+      - image: circleci/python:3.7.4-buster-node
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -19,13 +19,20 @@ jobs:
 
     steps:
       - checkout
+      - run: git submodule sync
+      - run: git submodule update --init
 
       # Download and cache dependencies
       - restore_cache:
+          name: restore python cache
           keys:
             - v1-dependencies-{{ checksum "requirements.txt" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
+      - restore_cache:
+          name: restore yarn cache
+          keys:
+            - yarn-package-{{ checksum "frontend/yarn.lock" }}
 
       - run:
           name: install dependencies
@@ -34,11 +41,23 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+      - run:
+          name: build frontend
+          command: |
+            yarn global add @vue/cli
+            cd frontend && yarn build --frozen-lockfile
 
       - save_cache:
+          name: save python cache
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+      - save_cache:
+          path:
+            - ~/.cache/yarn
+          key: yarn-package-{{ checksum "frontend/yarn.lock" }}
+          name: save yarn cache
 
       # run tests!
       # this example uses Django's built-in test-runner
