@@ -50,12 +50,6 @@ class CLSignInterfaceTest(TestCase):
         cls.user.save()
         return super().setUpTestData()
     
-    def test_hello_world(self):
-        client = Client()
-        client.force_login(self.user)
-        response = client.get('/')
-        self.assertContains(response, 'hello, world')
-
     def test_sign(self):
         client = Client()
         client.force_login(self.user)
