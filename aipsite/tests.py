@@ -1,4 +1,6 @@
 from django.test import TestCase, Client
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium.webdriver.firefox.webdriver import WebDriver
 from .models import PublicKey, AipUser, TeachingClass, get_semester
 import gmpy2
 import random
@@ -86,3 +88,28 @@ class CLSignInterfaceTest(TestCase):
         client = Client()
         response = client.get('/api/v1/pubkey/'+get_semester()+'/233')
         self.assertEqual(response.status_code, 200)
+
+class FrontEndTest(StaticLiveServerTestCase):
+    fixtures = ['data.json']
+
+    @classmethod
+    def setUpClass(cls):
+        cls.selenium = WebDriver()
+        cls.selenium.implicitly_wait(10)
+        return super().setUpClass()
+    
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super().tearDownClass()
+
+    def test_login(self):
+        from selenium.webdriver.support.wait import WebDriverWait
+        from selenium.webdriver.support import expected_conditions as EC
+        self.selenium.get(self.live_server_url)
+        self.selenium.find_element_by_css_selector('input[placeholder~=student]').send_keys('1120161700')
+        self.selenium.find_element_by_css_selector('input[placeholder~=kept').send_keys('qwertyuiop')
+        old_url = self.selenium.current_url
+        self.selenium.find_element_by_css_selector('button.primary').click()
+        WebDriverWait(self.selenium, 3).until(EC.url_changes(old_url))
+        self.assertIn('#/home', self.selenium.current_url)

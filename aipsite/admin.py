@@ -28,7 +28,7 @@ class PublicKeyAdmin(admin.ModelAdmin):
             'classes':('collapse', 'wide')
         })
     )
-    list_display=('teaching_class', 'semester')
+    list_display=('__str__', 'teaching_class', 'semester')
     form = PublicKeyForm
     
     
