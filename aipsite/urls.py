@@ -8,7 +8,7 @@ urlpatterns = [
             path('sign', views.sign)
         ]))
     ])),
-    path('', views.login_page),
+    path('', views.frontend),
     # path('accounts/', include('django.contrib.auth.urls')),
     # path('', views.index, name='index'),
 ]

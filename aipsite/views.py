@@ -28,7 +28,7 @@ def pubkey_query(request, semester, classno):
 # def index(request):
 #     return HttpResponse('hello, world')
 
-def login_page(request):
+def frontend(request):
     return render(request,'login/index.html')
 
 @require_POST
