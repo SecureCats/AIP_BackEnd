@@ -45,7 +45,7 @@ jobs:
       - run:
           name: build frontend
           command: |
-            yarn global add @vue/cli @vue/cli-service
+            yarn global add @vue/cli @vue/cli-service @vue/cli-plugin-unit-jest
             export PATH="$PATH:$(yarn global bin)"
             cd frontend && yarn install && yarn build --frozen-lockfile
 
@@ -72,6 +72,7 @@ jobs:
           command: |
             . venv/bin/activate
             python manage.py test
+            cd frontend && yarn run test:unit
 
       - store_artifacts:
           path: test-reports
