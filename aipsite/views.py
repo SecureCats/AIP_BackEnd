@@ -40,7 +40,7 @@ def frontend(request):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def userinfo(request):
-    me = models.AipUser.objects.get(username=request.user)
+    me = request.user
     return JsonResponse({
         'username': me.username,
     })
