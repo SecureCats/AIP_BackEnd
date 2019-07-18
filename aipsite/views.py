@@ -7,12 +7,16 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 import json
 from .utils import cl_sign
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
+
+
 def pubkey_query(request, semester, classno):
     pubkey = get_object_or_404(
-        models.PublicKey, 
-        teaching_class__classno=classno, 
+        models.PublicKey,
+        teaching_class__classno=classno,
         semester=semester
     )
     return JsonResponse({
@@ -28,8 +32,19 @@ def pubkey_query(request, semester, classno):
 # def index(request):
 #     return HttpResponse('hello, world')
 
+
 def frontend(request):
-    return render(request,'login/index.html')
+    return render(request, 'login/index.html')
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def userinfo(request):
+    me = models.AipUser.objects.get(username=request.user)
+    return JsonResponse({
+        'username': me.username,
+    })
+
 
 @require_POST
 @login_required
@@ -45,7 +60,7 @@ def sign(request):
         return HttpResponseForbidden('Prof commmitment has not start yet')
     param_list = ('x', 'C', 'z1', 'z2', 'y')
     try:
-        params = {i:recv_json[i] for i in param_list}
+        params = {i: recv_json[i] for i in param_list}
     except:
         return HttpResponseBadRequest()
     ret = cl_sign(pubkey, **params)
