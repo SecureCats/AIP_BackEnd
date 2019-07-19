@@ -1,5 +1,0 @@
-gmpy2==2.1.0b1
-Django==2.2.3
-pycrypto==2.6.1
-djangorestframework==3.9.4
-djangorestframework-simplejwt==4.3.0

@@ -1,5 +1,7 @@
 # AIP (Anonymous Identify Provider)
 
+![](https://flat.badgen.net/circleci/github/SecureCats/AIP_BackEnd?icon=circleci)
+
 ## Task
 * [x] sign function
 * [x] login
