@@ -14,7 +14,7 @@ class CLSignTest(TestCase):
     def test_cl_sign(self):
         teaching_claass = TeachingClass(classno='666')
         pubkey = PublicKey.create(teaching_claass)
-        uk = random.randrange(1<<4096)
+        uk = random.randrange(1<<PublicKey.ln)
         r = random.randrange(1<<32)
         r1, r2 = [random.randrange(1<<32) for _ in range(2)]
         a, b, c, n, g, h = pubkey.get_int(('a','b','c','n','g','h'))
@@ -55,7 +55,7 @@ class CLSignInterfaceTest(TestCase):
     def test_sign(self):
         client = Client()
         client.force_login(self.user)
-        uk = random.randrange(1<<4096)
+        uk = random.randrange(1<<PublicKey.ln)
         r = random.randrange(1<<32)
         r1, r2 = [random.randrange(1<<32) for _ in range(2)]
         a, b, c, n, g, h = self.pubkey.get_int(('a','b','c','n','g','h'))

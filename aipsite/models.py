@@ -30,9 +30,9 @@ class PublicKey(models.Model):
     h = models.CharField(max_length=1500, blank=True)
     p = models.CharField(max_length=1500, blank=True)
 
-    le = 2050
-    ls = 8196
-    ln = 4096
+    le = 1026
+    ls = 4096
+    ln = 2048
 
     teaching_class = models.ForeignKey(TeachingClass, models.CASCADE)
     semester = models.CharField("学期", max_length=20)
@@ -50,8 +50,8 @@ class PublicKey(models.Model):
             return None
 
     def init_key(self):
-        p = number.getStrongPrime(2048)
-        q = number.getStrongPrime(2048)
+        p = number.getStrongPrime(self.ln//2)
+        q = number.getStrongPrime(self.ln//2)
         n = p*q
         randlis = [random.randrange(0, 1<<1024) for _ in range(4)]
         rand2lis = list(map(lambda x: pow(x, 2, n) ,randlis))
