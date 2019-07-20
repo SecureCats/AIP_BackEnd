@@ -108,7 +108,7 @@ class FrontEndTest(StaticLiveServerTestCase):
         from selenium.webdriver.support import expected_conditions as EC
         self.selenium.get(self.live_server_url)
         self.selenium.find_element_by_css_selector('input[placeholder~=student]').send_keys('1120161700')
-        self.selenium.find_element_by_css_selector('input[placeholder~=kept').send_keys('qwertyuiop')
+        self.selenium.find_element_by_css_selector('input[placeholder~=kept').send_keys('qwerfvcxzasd')
         old_url = self.selenium.current_url
         self.selenium.find_element_by_css_selector('button.primary').click()
         WebDriverWait(self.selenium, 3).until(EC.url_changes(old_url))
