@@ -8,11 +8,12 @@ from django.views.decorators.http import require_POST
 import json
 from .utils import cl_sign
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 
 # Create your views here.
 
-
+@api_view(["GET"])
+@permission_classes([AllowAny])
 def pubkey_query(request, semester, classno):
     pubkey = get_object_or_404(
         models.PublicKey,
@@ -42,15 +43,19 @@ def frontend(request):
 def userinfo(request):
     me = request.user
     return JsonResponse({
-        'username': me.username,
+        'name': me.username,
+        'class_no':me.teaching_class.classno,
+        'semester':models.get_semester(),
+        'school':me.teaching_class.school
     })
 
 
-@require_POST
-@login_required
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def sign(request):
     if request.user.is_signed:
         return HttpResponseForbidden('You have got the signiture')
+    print(request.body)
     recv_json = json.loads(request.body)
     teaching_class = request.user.teaching_class
     if not teaching_class:

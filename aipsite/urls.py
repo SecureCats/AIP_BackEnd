@@ -10,6 +10,7 @@ urlpatterns = [
         ]))
     ])),
     path('', views.frontend),
+    path('home', views.frontend),
     # path('accounts/', include('django.contrib.auth.urls')),
     # path('', views.index, name='index'),
 ]
