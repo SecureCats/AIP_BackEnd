@@ -164,3 +164,5 @@ REST_FRAMEWORK = {
 
 
 STATIC_ROOT = '/usr/share/nginx/html/static/'
+
+X_FRAME_OPTIONS = f'ALLOWALL'
