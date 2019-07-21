@@ -7,12 +7,17 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 import json
 from .utils import cl_sign
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated,AllowAny
 
 # Create your views here.
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
 def pubkey_query(request, semester, classno):
     pubkey = get_object_or_404(
-        models.PublicKey, 
-        teaching_class__classno=classno, 
+        models.PublicKey,
+        teaching_class__classno=classno,
         semester=semester
     )
     return JsonResponse({
@@ -28,14 +33,29 @@ def pubkey_query(request, semester, classno):
 # def index(request):
 #     return HttpResponse('hello, world')
 
-def login_page(request):
-    return render(request,'login/index.html')
 
-@require_POST
-@login_required
+def frontend(request):
+    return render(request, 'login/index.html')
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def userinfo(request):
+    me = request.user
+    return JsonResponse({
+        'name': me.username,
+        'class_no':me.teaching_class.classno,
+        'semester':models.get_semester(),
+        'school':me.teaching_class.school
+    })
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def sign(request):
     if request.user.is_signed:
         return HttpResponseForbidden('You have got the signiture')
+    print(request.body)
     recv_json = json.loads(request.body)
     teaching_class = request.user.teaching_class
     if not teaching_class:
@@ -45,7 +65,7 @@ def sign(request):
         return HttpResponseForbidden('Prof commmitment has not start yet')
     param_list = ('x', 'C', 'z1', 'z2', 'y')
     try:
-        params = {i:recv_json[i] for i in param_list}
+        params = {i: recv_json[i] for i in param_list}
     except:
         return HttpResponseBadRequest()
     ret = cl_sign(pubkey, **params)
