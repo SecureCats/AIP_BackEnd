@@ -72,11 +72,11 @@ jobs:
       # other common Python testing frameworks include pytest and nose
       # https://pytest.org
       # https://nose.readthedocs.io
-      - run:
-          name: run tests
-          command: |
-            # pipenv run python manage.py test --parallel
-            cd frontend && yarn run test:unit
+      # - run:
+      #     name: run tests
+      #     command: |
+      #       pipenv run python manage.py test --parallel
+      #       cd frontend && yarn run test:unit
           
       - store_artifacts:
           path: test-reports
