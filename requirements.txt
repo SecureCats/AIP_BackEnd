@@ -1,0 +1,12 @@
+Django==2.2.3
+django-environ==0.4.5
+djangorestframework==3.10.1
+djangorestframework-simplejwt==4.3.0
+gmpy2==2.0.8
+pycryptodome==3.8.2
+PyJWT==1.7.1
+pytz==2019.1
+sqlparse==0.3.0
+tblib==1.4.0
+urllib3==1.25.3
+uwsgi

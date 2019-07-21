@@ -77,7 +77,14 @@ jobs:
       #     command: |
       #       pipenv run python manage.py test --parallel
       #       cd frontend && yarn run test:unit
-          
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: build docker image
+          command: |
+            docker build -t felinae98/tapes-aip .
+            echo $DOCKER_PASS | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push felinae98/tapes-aip
       - store_artifacts:
           path: test-reports
           destination: test-reports
