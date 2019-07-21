@@ -5,10 +5,12 @@ urlpatterns = [
     path('api/', include([
         path('v1/', include([
             path('pubkey/<str:semester>/<str:classno>', views.pubkey_query),
-            path('sign', views.sign)
+            path('sign', views.sign),
+            path('info',views.userinfo)
         ]))
     ])),
-    path('', views.login_page),
+    path('', views.frontend),
+    path('home', views.frontend),
     # path('accounts/', include('django.contrib.auth.urls')),
     # path('', views.index, name='index'),
 ]

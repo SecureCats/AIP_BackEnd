@@ -14,7 +14,7 @@ class CLSignTest(TestCase):
     def test_cl_sign(self):
         teaching_claass = TeachingClass(classno='666')
         pubkey = PublicKey.create(teaching_claass)
-        uk = random.randrange(1<<4096)
+        uk = random.randrange(1<<PublicKey.ln)
         r = random.randrange(1<<32)
         r1, r2 = [random.randrange(1<<32) for _ in range(2)]
         a, b, c, n, g, h = pubkey.get_int(('a','b','c','n','g','h'))
@@ -55,7 +55,7 @@ class CLSignInterfaceTest(TestCase):
     def test_sign(self):
         client = Client()
         client.force_login(self.user)
-        uk = random.randrange(1<<4096)
+        uk = random.randrange(1<<PublicKey.ln)
         r = random.randrange(1<<32)
         r1, r2 = [random.randrange(1<<32) for _ in range(2)]
         a, b, c, n, g, h = self.pubkey.get_int(('a','b','c','n','g','h'))
@@ -108,7 +108,7 @@ class FrontEndTest(StaticLiveServerTestCase):
         from selenium.webdriver.support import expected_conditions as EC
         self.selenium.get(self.live_server_url)
         self.selenium.find_element_by_css_selector('input[placeholder~=student]').send_keys('1120161700')
-        self.selenium.find_element_by_css_selector('input[placeholder~=kept').send_keys('qwertyuiop')
+        self.selenium.find_element_by_css_selector('input[placeholder~=kept').send_keys('qwerfvcxzasd')
         old_url = self.selenium.current_url
         self.selenium.find_element_by_css_selector('button.primary').click()
         WebDriverWait(self.selenium, 3).until(EC.url_changes(old_url))

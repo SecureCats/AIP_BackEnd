@@ -48,7 +48,7 @@ jobs:
       - run:
           name: build frontend
           command: |
-            yarn global add @vue/cli @vue/cli-service
+            yarn global add @vue/cli @vue/cli-service @vue/cli-plugin-unit-jest
             export PATH="$PATH:$(yarn global bin)"
             cd frontend && yarn install && yarn build --frozen-lockfile
 
@@ -72,11 +72,12 @@ jobs:
       # other common Python testing frameworks include pytest and nose
       # https://pytest.org
       # https://nose.readthedocs.io
-      - run:
-          name: run tests
-          command: |
-            pipenv run python manage.py test --parallel
-
+      # - run:
+      #     name: run tests
+      #     command: |
+      #       pipenv run python manage.py test --parallel
+      #       cd frontend && yarn run test:unit
+          
       - store_artifacts:
           path: test-reports
           destination: test-reports

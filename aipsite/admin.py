@@ -14,7 +14,7 @@ class PublicKeyForm(forms.ModelForm):
 @admin.register(PublicKey)
 class PublicKeyAdmin(admin.ModelAdmin):
 
-    actions = ['init_pubkey', 'renew_pubkey']
+    actions = ['init_pubkey', 'renew_pubkey', 'clear_key']
     fieldsets = (
         (None, {
             "fields": (
@@ -38,11 +38,16 @@ class PublicKeyAdmin(admin.ModelAdmin):
                 obj.init_key()
                 obj.save()
 
-    def renew_pubkey(self, requst, queryset):
+    def renew_pubkey(self, request, queryset):
         for obj in queryset:
             ret = obj.renew()
             if ret:
                 ret.save()
+    
+    def clear_key(self, request, queryset):
+        queryset.update(
+            a='', b='', c='', n='', h='', p='', g=''
+        )
 
 class AipUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
