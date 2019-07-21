@@ -8,7 +8,7 @@ RUN sed -i 's/deb.debian.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.li
     sed -i 's|security.debian.org/debian-security|mirrors.tuna.tsinghua.edu.cn/debian-security|g' /etc/apt/sources.list && \
     sed -i 's|security.debian.org|mirrors.tuna.tsinghua.edu.cn/debian-security|g' /etc/apt/sources.list && \
     apt-get update && \
-    apt-get install -y nginx supervisor && \
+    apt-get install -y nginx supervisor libgmp3-dev libmpfr-dev yarn libmpc-dev && \
     rm -rf /var/lib/apt/lists/* && \
     pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
     pip install -r requirements.txt --no-cache-dir && \
