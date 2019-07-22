@@ -86,7 +86,8 @@ jobs:
             docker build -t felinae98/tapes-aip:$TAG .
             docker tag felinae98/tapes-aip:$TAG felinae98/tapes-aip:$CIRCLE_BRANCH
             echo $DOCKER_PASS | docker login -u $DOCKER_LOGIN --password-stdin
-            docker push felinae98/tapes-aip:$TAG felinae98-aip:$CIRCLE_BRANCH
+            docker push felinae98/tapes-aip:$TAG
+            docker push felinae98/tapes-aip:$CIRCLE_BRANCH 
       - store_artifacts:
           path: test-reports
           destination: test-reports
