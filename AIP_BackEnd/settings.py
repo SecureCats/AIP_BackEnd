@@ -11,7 +11,12 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import environ
 
+env = environ.Env(
+    DEBUG=(bool, True),
+    SECRET_KEY=(str, 'sv4f1z7x2fqeh3+^b7(-=2vk1-d0#$b!+_#w97(+hd4if2%h4('),
+)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,19 +25,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'sv4f1z7x2fqeh3+^b7(-=2vk1-d0#$b!+_#w97(+hd4if2%h4('
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.environ.get('DJANGO_PRODUCTION'):
-    DEBUG = False
-else:
-    DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [
     'testserver',
     'localhost',
     '127.0.0.1',
-    '*'
+    'aip.tapes.ga'
 ]
 
 
@@ -83,24 +85,9 @@ WSGI_APPLICATION = 'AIP_BackEnd.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ.get('POSTGRES_DATABASE_NAME') or os.environ.get('DJANGO_DATABASE_NAME') or 'db',
-            'USER': 'root',
-            'PASSWORD': os.environ.get('POSTGRES_ROOT_PASSWORD') or os.environ.get('DJANGO_DATABASE_PASSWORD'),
-            'HOST': os.environ.get('POSTGRES_DATABASE_HOST') or os.environ.get('DJANGO_DATABASE_HOST'),
-        }
-    }
-
+DATABASES = {
+    'default': env.db(default='sqlite:///'+os.path.join(BASE_DIR, 'db.sqlite3'))
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -141,7 +128,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, 'frontend', 'dist',),
 ]
 

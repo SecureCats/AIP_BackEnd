@@ -13,6 +13,7 @@ pycryptodome = "*"
 djangorestframework = ">=3.9.4"
 djangorestframework-simplejwt = ">=4.3.0"
 Django = ">=2.2.3"
+django-environ = "*"
 
 [requires]
 python_version = "3.7"
