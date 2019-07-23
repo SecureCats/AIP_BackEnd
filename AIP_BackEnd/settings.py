@@ -34,7 +34,7 @@ ALLOWED_HOSTS = [
     'testserver',
     'localhost',
     '127.0.0.1',
-    'aip.tapes.ga',
+    'aip.fates.felinae98.cn',
     'aip'
 ]
 
