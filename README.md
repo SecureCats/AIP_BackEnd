@@ -9,6 +9,8 @@
 
 ## 📦 架构
 
+AIP 匿名身份提供平台架构基于 Opaak（开放匿名身份认证架构）和 CL 签名的理论支持。请参考：[SecureCats/RelatedWork](https://github.com/SecureCats/RelatedWork)
+
 ### 整体架构
 
 - Client 客户端：学生用户
