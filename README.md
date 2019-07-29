@@ -21,7 +21,7 @@
 
 ### 目录结构
 
-仓库主要包含 AIP 服务端内容。其中 `frontend/` 路径为 `submodule`，链接至 TES 前端项目：[SecureCats/AIP_FrontEnd](https://github.com/SecureCats/AIP_FrontEnd)
+仓库主要包含 AIP 服务端内容。其中 `frontend/` 路径为 `submodule`，链接至 AIP 前端项目：[SecureCats/AIP_FrontEnd](https://github.com/SecureCats/AIP_FrontEnd)
 
 ```
 .
