@@ -54,7 +54,7 @@ def userinfo(request):
 @permission_classes([IsAuthenticated])
 def sign(request):
     if request.user.is_signed:
-        return HttpResponseForbidden('You have got the signiture')
+        return HttpResponseForbidden('You have got the signature')
     print(request.body)
     recv_json = json.loads(request.body)
     teaching_class = request.user.teaching_class
